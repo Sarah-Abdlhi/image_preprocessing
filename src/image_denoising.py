@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 plt.ion()  # Enable interactive mode
 
 # Reading image from folder where it is stored 
-img = cv2.imread('/home/sarah/Documents/img_preprocessing/src/balloons.png') 
+img = cv2.imread('/home/sarah/Documents/img_preprocessing/src/noisy_image.jpeg') 
 
 # denoising of image saving it into dst image 
 dst = cv2.fastNlMeansDenoisingColored(img, None, 10, 10, 7, 15) 

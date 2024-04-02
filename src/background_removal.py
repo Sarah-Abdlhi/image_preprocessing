@@ -2,7 +2,7 @@
 import cv2 
 
 # Import the image 
-file_name = "balloons_noisy.png"
+file_name = "/home/sarah/Documents/img_preprocessing/src/flower.jpeg"
 
 # Read the image 
 src = cv2.imread(file_name, 1) 
@@ -26,4 +26,4 @@ rgba = [b, g, r, alpha]
 dst = cv2.merge(rgba, 4) 
 
 # Writing and saving to a new image 
-cv2.imwrite("gfg_white.png", dst) 
+cv2.imwrite("bkgrnd_rmvd.png", dst) 

@@ -1,48 +1,34 @@
-import cv2
-import numpy as np
-from matplotlib import pyplot as plt
+import cv2 
+import matplotlib.pyplot as plt 
+import numpy as np 
 
+# Load the image 
+image = cv2.imread('/home/sarah/Documents/img_preprocessing/src/flower_blur.png') 
 
-original= cv2.imread('balloons_noisy.png', cv2.IMREAD_UNCHANGED)
-plt.imshow(cv2.cvtColor(original, cv2.COLOR_BGR2RGB))
-plt.axis('off')  # Remove axis labels
+# Plot the original image 
+plt.subplot(1, 2, 1) 
+plt.title("Original") 
+plt.imshow(cv2.cvtColor(image, cv2.COLOR_BGR2RGB)) 
+
+# Create the sharpening kernel 
+kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]]) 
+
+# Split the image into color channels 
+b, g, r = cv2.split(image)
+
+# Sharpen each color channel 
+sharpened_b = cv2.filter2D(b, -1, kernel) 
+sharpened_g = cv2.filter2D(g, -1, kernel) 
+sharpened_r = cv2.filter2D(r, -1, kernel) 
+
+# Merge the sharpened color channels 
+sharpened_image = cv2.merge((sharpened_b, sharpened_g, sharpened_r))
+
+# Save the image 
+cv2.imwrite('sharpened_image.jpg', sharpened_image) 
+
+# Plot the sharpened image 
+plt.subplot(1, 2, 2) 
+plt.title("Sharpening") 
+plt.imshow(cv2.cvtColor(sharpened_image, cv2.COLOR_BGR2RGB)) 
 plt.show()
-print("Blur Image")
-
-# create a sharpening kernel
-sharpen_filter=np.array([[-1,-1,-1],
-                 [-1,9,-1],
-                [-1,-1,-1]])
-# applying kernels to the input image to get the sharpened image
-
-sharp_image=cv2.filter2D(original,-1,sharpen_filter)
-plt.imshow(cv2.cvtColor(sharp_image, cv2.COLOR_BGR2RGB))
-plt.axis('off')  # Remove axis labels
-plt.show()
-print("Sharpened Image")
-
-
-
-
-import cv2
-
-# Load the image in its original format
-original = cv2.imread('balloons_noisy.png', cv2.IMREAD_UNCHANGED)
-
-# Define the sharpening kernel
-sharpen_filter = np.array([[-1, -1, -1],
-                           [-1,  9, -1],
-                           [-1, -1, -1]])
-
-# Apply the sharpening filter
-sharp_image = cv2.filter2D(original, -1, sharpen_filter)
-
-# Display the original and sharpened images using OpenCV
-cv2.imshow("Original Image", original)
-cv2.waitKey(0)  # Wait for a key press to close the window
-
-cv2.imshow("Sharpened Image", sharp_image)
-cv2.waitKey(0)  # Wait for a key press to close the window
-
-cv2.destroyAllWindows()  # Close all OpenCV windows
-
